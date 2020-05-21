@@ -1,8 +1,20 @@
+//==================================================================================================
+//  Filename      : reg32b_test.v
+//  Created On    : 2020-05-22 00:17:51
+//  Last Modified : 2020-05-22 00:17:56
+//  Revision      : 
+//  Author        : kokkoroQwQ
+//  Email         : 17307130169@fudan.edu.cn
+//
+//  Description   : 
+//
+//
+//==================================================================================================
 `timescale 1ns/1ps
 
-`include "regfile.h"
+`include "reg32b.h"
 
-module regfile_test;
+module reg32b_test;
 
 	reg clk;
 	reg reset_;
@@ -19,7 +31,7 @@ module regfile_test;
 		clk <= ~clk;
 	end
 
-	regfile regfile(
+	reg32b reg32b(
 		.clk(clk),
 		.reset_(reset_),
 		.addr(addr),
@@ -66,8 +78,8 @@ module regfile_test;
 	end
 
 	initial begin
-		$dumpfile("regfile.vcd");
-		$dumpvars(0, regfile);
+		$dumpfile("reg32b.vcd");
+		$dumpvars(0, reg32b);
 	end
 
 endmodule

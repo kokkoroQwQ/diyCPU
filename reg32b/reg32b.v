@@ -1,9 +1,9 @@
 //==================================================================================================
-//  Filename      : regfile.v
+//  Filename      : reg32b.v
 //  Created On    : 2020-05-19 21:01:27
-//  Last Modified : 2020-05-20 11:52:08
+//  Last Modified : 2020-05-22 00:13:32
 //  Revision      : 
-//  Author        : Yuanxi Ye
+//  Author        : kokkoroQwQ
 //  Email         : 17307130169@fudan.edu.cn
 //
 //  Description   : 
@@ -11,8 +11,8 @@
 //
 //==================================================================================================
 
-`include "regfile.h"
-module  regfile(
+`include "reg32b.h"
+module  reg32b(
 	//system signals
 	input wire 				clk,
 	input wire 				reset_,

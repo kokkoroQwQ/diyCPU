@@ -1,5 +1,5 @@
-`ifndef __REGFILE_HEADER_
-	`define __REGFILE_HEADER_
+`ifndef __REGISTER_HEADER_
+	`define __REGISTER_HEADER_
 
 	/*********信号电平*********/
 	`define HIGH			1'b1
