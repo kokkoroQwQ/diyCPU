@@ -5,5 +5,5 @@
 
 	/********默认网络类型：两者间选择一种********/
 	`default_nettype none
-	`default_nettype wire
+	//`default_nettype wire
 `endif
