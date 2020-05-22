@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : bus_arbiter.v
 //  Created On    : 2020-05-22 13:35:27
-//  Last Modified : 2020-05-22 14:36:28
+//  Last Modified : 2020-05-23 02:26:54
 //  Revision      : 
 //  Author        : kokkoroQwQ
 //  Email         : 17307130169@fudan.edu.cn
@@ -12,12 +12,11 @@
 //==================================================================================================
 `define NEGATIVE_RESET // see in global_config.h
 `include "../global_files/global.h"
-`include "bus.h"
-/*
 `include "../global_files/nettype.h"
 `include "../global_files/global_config.h"
 `include "../global_files/stddef.h"
-*/
+`include "bus.h"
+
 
 module bus_arbiter (
 	//system signals
@@ -34,10 +33,10 @@ module bus_arbiter (
 	output	reg			m2_grnt_,
 
 	input	wire		m3_req_,
-	output	reg			m3_grnt_,
+	output	reg			m3_grnt_
 	//
 );
-	reg		[BusOwnerBus]	owner;
+	reg		[`BusOwnerBus]	owner;
 
 	/* 赋予总线使用权 */
 	always @(*) begin
@@ -61,19 +60,39 @@ module bus_arbiter (
 		    `BUS_OWNER_MASTER_3 : begin
 		    	m3_grnt_ = `ENABLE_;
 		    end
+		    `BUS_OWNER_MASTER_NULL : begin
+		    	m0_grnt_ = `DISABLE_;
+				m1_grnt_ = `DISABLE_;
+				m2_grnt_ = `DISABLE_;
+				m3_grnt_ = `DISABLE_;
+		    end
 		endcase
-		
 	end
 
 	/* 总线使用权的仲裁 */
-	always @(posedge clk `RESET_EDGE reset) begin
+	always @(posedge clk or `RESET_EDGE reset) begin
 		if (reset == `RESET_ENABLE) begin
 			// 异步复位
-			owner <= #1 `BUS_OWNER_MASTER_0;
+			owner <= #1 `BUS_OWNER_MASTER_NULL;
 		end
 		else begin
 			/* 仲裁 */
 			case (owner)
+				`BUS_OWNER_MASTER_NULL : begin 	// 无主控拥有使用权
+				/* 下一个获得总线使用权的主控 */
+					if (m0_req_ == `ENABLE_) begin
+						owner <= #1 `BUS_OWNER_MASTER_0;
+					end else if (m1_req_ == `ENABLE_) begin
+						owner <= #1 `BUS_OWNER_MASTER_1;
+					end else if (m2_req_ == `ENABLE_) begin
+						owner <= #1 `BUS_OWNER_MASTER_2;
+					end else if (m3_req_ == `ENABLE_) begin
+						owner <= #1 `BUS_OWNER_MASTER_3;
+					end else begin
+						owner <= #1 `BUS_OWNER_MASTER_NULL;
+					end
+				end
+
 				`BUS_OWNER_MASTER_0 : begin 	// 0号主控拥有使用权
 					/* 下一个获得总线使用权的主控 */
 					if (m0_req_ == `ENABLE_) begin
@@ -84,6 +103,8 @@ module bus_arbiter (
 						owner <= #1 `BUS_OWNER_MASTER_2;
 					end else if (m3_req_ == `ENABLE_) begin
 						owner <= #1 `BUS_OWNER_MASTER_3;
+					end else begin
+						owner <= #1 `BUS_OWNER_MASTER_NULL;
 					end
 				end
 
@@ -97,6 +118,8 @@ module bus_arbiter (
 						owner <= #1 `BUS_OWNER_MASTER_3;
 					end else if (m0_req_ == `ENABLE_) begin
 						owner <= #1 `BUS_OWNER_MASTER_0;
+					end else begin
+						owner <= #1 `BUS_OWNER_MASTER_NULL;
 					end
 				end
 
@@ -110,6 +133,8 @@ module bus_arbiter (
 						owner <= #1 `BUS_OWNER_MASTER_0;
 					end else if (m1_req_ == `ENABLE_) begin
 						owner <= #1 `BUS_OWNER_MASTER_1;
+					end else begin
+						owner <= #1 `BUS_OWNER_MASTER_NULL;
 					end
 				end
 
@@ -123,6 +148,8 @@ module bus_arbiter (
 						owner <= #1 `BUS_OWNER_MASTER_1;
 					end else if (m2_req_ == `ENABLE_) begin
 						owner <= #1 `BUS_OWNER_MASTER_2;
+					end else begin
+						owner <= #1 `BUS_OWNER_MASTER_NULL;
 					end
 				end
 			endcase

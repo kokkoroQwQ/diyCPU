@@ -5,12 +5,13 @@
 
 	`define BUS_MASTER_CH		4
 	`define BUS_MASTER_INDEX_W	2
-	`define BusOwnerBus			1:0
+	`define BusOwnerBus			2:0
 
-	`define BUS_OWNER_MASTER_0	2'h0
-	`define BUS_OWNER_MASTER_1	2'h1
-	`define BUS_OWNER_MASTER_2	2'h2
-	`define BUS_OWNER_MASTER_3	2'h3
+	`define BUS_OWNER_MASTER_0	3'h0
+	`define BUS_OWNER_MASTER_1	3'h1
+	`define BUS_OWNER_MASTER_2	3'h2
+	`define BUS_OWNER_MASTER_3	3'h3
+	`define BUS_OWNER_MASTER_NULL	3'h`BUS_MASTER_CH
 
 	`define BUS_SLAVE_CH		8
 	`define BUS_SLAVE_INDEX_W	3

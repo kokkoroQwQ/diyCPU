@@ -26,7 +26,7 @@
 
 	`define WORD_ADDR_W		30
 	`define WORD_ADDR_MSB	29
-	`deine WordAddrBus		29:0
+	`define WordAddrBus		29:0
 
 	`define BYTE_OFFSET_W	2
 	`define ByteOffsetBus	1:0
