@@ -2,7 +2,7 @@
 
 `ifndef __GLOBAL_HEADER__
 	`define __GLOBAL_HEADER__
-	`ifndef NEGATIVE
+	`ifndef NEGATIVE_RESET
 		`define NEGATIVE_RESET
 	`endif
 	`include "global_config.h"
