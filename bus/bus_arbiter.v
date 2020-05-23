@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : bus_arbiter.v
 //  Created On    : 2020-05-22 13:35:27
-//  Last Modified : 2020-05-23 02:48:32
+//  Last Modified : 2020-05-23 12:20:06
 //  Revision      : 
 //  Author        : kokkoroQwQ
 //  Email         : 17307130169@fudan.edu.cn
@@ -61,10 +61,7 @@ module bus_arbiter (
 		    	m3_grnt_ = `ENABLE_;
 		    end
 		    `BUS_OWNER_MASTER_NULL : begin
-		    	m0_grnt_ = `DISABLE_;
-				m1_grnt_ = `DISABLE_;
-				m2_grnt_ = `DISABLE_;
-				m3_grnt_ = `DISABLE_;
+		    	;
 		    end
 		endcase
 	end
